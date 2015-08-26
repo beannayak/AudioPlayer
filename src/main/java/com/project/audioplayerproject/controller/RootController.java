@@ -14,6 +14,11 @@ public class RootController {
     public String rootController(){
         return "SplashScreen";
     }
+      
+    @RequestMapping (value="/403", method=RequestMethod.GET)
+    public String error(){
+        return "403";
+    }
     
     @RequestMapping (value="/check", method=RequestMethod.GET)
     public @ResponseBody TestDomain check(){

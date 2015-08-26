@@ -8,6 +8,20 @@
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     
     <beans:bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+    <http>
+        <intercept-url pattern="/player/**" access="ROLE_USER" />
+        <access-denied-handler error-page="/403" />
+        <form-login login-page="/" authentication-failure-url="/403" default-target-url="/player/home" />
+        <logout logout-success-url="/" />
+    </http>
     
+    
+    <authentication-manager  alias="authenticationManager">
+        <authentication-provider>
+            <user-service>
+                <user name="player" password="linapp" authorities="ROLE_USER" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
 </beans:beans>
 
