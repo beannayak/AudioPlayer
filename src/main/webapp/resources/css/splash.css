@@ -1,0 +1,22 @@
+* { margin: 0; padding: 0; }
+		
+#imgDiv { 
+    background: no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#splashdiv {
+  position: fixed; /* or absolute */
+  top: 30%;
+  left: 40%;
+}
+
+#logoName {
+    position: relative;
+    margin-left: auto;
+    text-align: center;
+    color: #f1f1f1;
+}
