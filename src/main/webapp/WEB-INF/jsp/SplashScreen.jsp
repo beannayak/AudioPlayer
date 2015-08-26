@@ -32,7 +32,7 @@
         <div id="loginDiv" ng-controller="LoginController" ng-show="!splashVisible">
             <div class="logmod">
                 <div class="logmod__wrapper">
-                    <span class="logmod__close">Close</span>
+                    <!--<span class="logmod__close">Close</span>-->
                     <div class="logmod__container">
                         <ul class="logmod__tabs">
                             <li data-tabtar="lgm-2"><a href="#">Login</a></li>
@@ -62,6 +62,12 @@
                                                 <input class="string optional" maxlength="255" id="user-pw-repeat" placeholder="Repeat password" type="text" size="50" />
                                             </div>
                                         </div>
+                                        <div class="sminputs">
+                                            <div class="input full">
+                                                <label class="string optional">Invitation-Code*</label>
+                                                <input class="string optional" maxlength="255" id="invitaiton-code" placeholder="Invitation Code" type="text" size="50" />
+                                            </div>
+                                        </div>
                                         <div class="simform__actions">
                                             <input class="sumbit" name="commit" type="sumbit" value="Create Account" />
                                             <span class="simform__actions-sidetext">By creating an account you agree to our <a class="special" href="#" target="_blank" role="link">Terms & Privacy</a></span>
@@ -71,7 +77,7 @@
                             </div>
                             <div class="logmod__tab lgm-2">
                                 <div class="logmod__heading">
-                                    <span class="logmod__heading-subtitle">Enter your email and password <strong>to sign in</strong></span>
+                                    <span class="logmod__heading-subtitle">Enter your username and password <strong>to sign in</strong></span>
                                 </div> 
                                 <div class="logmod__form">
                                     <!-- Login Form -->
@@ -92,7 +98,7 @@
                                         </div>
                                         <div class="simform__actions">
                                             <input class="sumbit" type="submit" value="Log In" />
-                                            <span class="simform__actions-sidetext"><a class="special" role="link" href="#">Forgot your password?<br>Click here</a></span>
+                                            <!--                                            <span class="simform__actions-sidetext"><a class="special" role="link" href="#">Forgot your password?<br>Click here</a></span>-->
                                         </div> 
                                     </form>
                                 </div> 
