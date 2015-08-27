@@ -6,9 +6,28 @@ app.controller ("SplashController", function($scope, $rootScope) {
         $rootScope.splashVisible = false;
         clearInterval($scope.myTimer);
         $scope.$apply($rootScope.splashVisible);
-    }, 500);
+    }, 2000);
 });
 
-app.controller("LoginController", function ($scope){
-    
+var appOne = angular.module("linAppPlayer", []);
+appOne.controller ("PlayerController", function ($scope, $rootScope){
+	$scope.playing = false;
+  	$scope.audio = document.createElement('audio');
+  	$scope.audio.src = 'media/ab.mp3';
+
+  	$scope.play = function() {
+            $scope.audio.play();
+            $scope.playing = true;
+  	};
+
+  	$scope.stop = function() {
+            $scope.audio.pause();
+            $scope.playing = false;
+  	};
+
+  	$scope.audio.addEventListener('ended', function() {
+            $scope.$apply(function() {
+            	$scope.stop();
+            });
+  	});
 });

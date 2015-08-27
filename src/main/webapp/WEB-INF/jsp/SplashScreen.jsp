@@ -10,6 +10,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <c:url var="baseUrl" value="/resources"/>
         <link rel="stylesheet" type="text/css" href="${baseUrl}/css/splash.css"> 
         <link rel="stylesheet" href="${baseUrl}/css/normalize.css">
@@ -22,14 +24,13 @@
     </head>
 
     <body style="background: url(${baseUrl}/img/background.jpg)" id="imgDiv" ng-app="linApp">
-        <div id="splashdiv" ng-controller="SplashController" ng-show="splashVisible">
-            <img id="logo" src="${baseUrl}/img/appLogo.png"/>
-            <div id="logoName">
-                <h1>Linamp</h1>
+        <div id="splashDiv" ng-controller="SplashController" ng-show="splashVisible">
+            <div id="insideDiv">
+                <img id="logo" src="${baseUrl}/img/appLogo.png"/>
+                <p id="logoText">LINAPP</p>
             </div>
         </div>
-
-        <div id="loginDiv" ng-controller="LoginController" ng-show="!splashVisible">
+        <div id="loginDiv" ng-show="!splashVisible">
             <div class="logmod">
                 <div class="logmod__wrapper">
                     <!--<span class="logmod__close">Close</span>-->
@@ -108,7 +109,6 @@
                 </div>
             </div>
         </div>
-
         <script src="${baseUrl}/js/index.js"></script>
     </body>
 </html>

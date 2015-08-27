@@ -48,7 +48,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -56,5 +56,13 @@
             </props>
         </property>
     </bean>
-    
+
+    <!-- mp3Link -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean id="byteArrayMessageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>     
 </beans>
