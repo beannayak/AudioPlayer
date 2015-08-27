@@ -4,6 +4,7 @@ com/project/audioplayerproject/domain/AddSong.class
 com/project/audioplayerproject/controller/RootController.class
 com/project/audioplayerproject/domain/Song.class
 com/project/audioplayerproject/domain/User.class
+com/project/audioplayerproject/controller/PlayerRestServices.class
 com/project/audioplayerproject/service/UserService.class
 com/project/audioplayerproject/repository/UserDao.class
 com/project/audioplayerproject/controller/PlayerController.class

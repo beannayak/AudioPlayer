@@ -48,7 +48,10 @@ public class PlayerController {
     private SongService ss;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String playerLibrary() {
+    public String playerLibrary(Model model) {
+        auth = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = auth.getName();
+        model.addAttribute("songs", us.getUserByUsername(loggedInUserName).getSongs());
         return "Player";
     }
 
@@ -95,19 +98,6 @@ public class PlayerController {
         return "redirect:/player/home";
     }
 
-    @RequestMapping("/songCache/{song}.mp3")
-    public @ResponseBody
-    byte[] demoMp3(@PathVariable String song, HttpServletRequest request, HttpServletResponse response) {
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        String loggedInUserName = auth.getName();
-        
-        response.setHeader("Content-Type", "audio/mpeg");
-        try {
-            InputStream in = new FileInputStream("/home/binayak/Desktop/songs/" + loggedInUserName + "/" + song + ".mp3");
-            return IOUtils.toByteArray(in);
-        } catch (IOException e){
-            System.out.println(e.getMessage());
-            throw new ResourceNotFoundException();
-        }
-    }
+    
+    
 }

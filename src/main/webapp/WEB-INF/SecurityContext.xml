@@ -19,6 +19,7 @@
     <authentication-manager  alias="authenticationManager">
         <authentication-provider>
             <user-service>
+                <user name="aUser" password="aUser" authorities="ROLE_USER" />
                 <user name="player" password="linapp" authorities="ROLE_USER" />
             </user-service>
         </authentication-provider>
