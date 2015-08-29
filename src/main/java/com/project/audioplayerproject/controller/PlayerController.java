@@ -8,17 +8,10 @@ package com.project.audioplayerproject.controller;
 import com.project.audioplayerproject.domain.AddSong;
 import com.project.audioplayerproject.domain.Song;
 import com.project.audioplayerproject.domain.User;
-import com.project.audioplayerproject.other.ResourceNotFoundException;
 import com.project.audioplayerproject.service.SongService;
 import com.project.audioplayerproject.service.UserService;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -74,7 +66,7 @@ public class PlayerController {
             return "AddSong";
         }
 
-        long nextVal = ss.getTotalSongCount() + 1;
+        long nextVal = ss.getLastInserted() + 1;
         auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserName = auth.getName();
         User user = us.getUserByUsername(loggedInUserName);
@@ -85,7 +77,9 @@ public class PlayerController {
         
         Song song = new Song(0, addSong.getTitle(), addSong.getArtist(), addSong.getAlbum(), ("S" + Long.toString(nextVal)));
         ss.save(song);
+        
         user.addSongs(song);
+        
         us.update(user);
         
         try {

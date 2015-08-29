@@ -10,6 +10,7 @@
     <beans:bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
     <http>
         <intercept-url pattern="/player/**" access="ROLE_USER" />
+        <intercept-url pattern="/api/**" access="ROLE_USER" />
         <access-denied-handler error-page="/403" />
         <form-login login-page="/" authentication-failure-url="/403" default-target-url="/player/home" />
         <logout logout-success-url="/" />

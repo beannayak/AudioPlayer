@@ -8,8 +8,8 @@ package com.project.audioplayerproject.controller;
 import com.project.audioplayerproject.domain.Song;
 import com.project.audioplayerproject.domain.User;
 import com.project.audioplayerproject.other.ResourceNotFoundException;
+import com.project.audioplayerproject.service.SongService;
 import com.project.audioplayerproject.service.UserService;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,10 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.stream.ImageInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +30,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -47,6 +47,9 @@ public class PlayerRestServices {
     
     @Autowired
     private UserService us;
+    
+    @Autowired
+    private SongService ss;
     
     @RequestMapping("/getSong/{song}.mp3")
     public @ResponseBody
@@ -129,5 +132,42 @@ public class PlayerRestServices {
         
         User user = us.getUserByUsername(loggedInUserName);
         return user.getSongs();
+    }
+    
+    @RequestMapping (value = "/deleteSong", method = RequestMethod.GET)
+    public @ResponseBody boolean deleteSong(@RequestParam String songName){
+        
+        long val = Long.valueOf(songName.replace("S", ""));
+        System.out.println("number value is: " + songName + ":" + songName.replace("S", ""));
+        
+        auth = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = auth.getName();
+        String imageFile = "/home/binayak/Desktop/songs/" + loggedInUserName + "/" + songName.replace("S", "I") + ".jpg";
+        String songFile = "/home/binayak/Desktop/songs/" + loggedInUserName + "/" + songName + ".mp3";
+        
+        boolean flag;
+        try {
+            File file = new File(imageFile);
+            if (!file.exists())
+                return false;
+            file.delete();
+                
+            file = new File(songFile);
+            if (!file.exists())
+                return false;
+            flag = file.delete();
+        } catch (Exception e){
+            System.out.println("Exception occured");
+            return false;
+        }
+        
+        User user = us.getUserByUsername(loggedInUserName);
+        Song song = ss.getSongByLocation(songName);
+             
+        user.getSongs().remove(song);
+        us.update(user);
+        ss.delete(song);
+        
+        return flag;
     }
 }

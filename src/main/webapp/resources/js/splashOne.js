@@ -11,13 +11,22 @@ app.controller("SplashController", function ($scope, $rootScope) {
 
 var appOne = angular.module("linAppPlayer", []);
 appOne.controller("PlayerController", function ($scope, $rootScope) {
-    $scope.playing = false;
+    $scope.playing = true;
     $scope.audio = document.createElement('audio');
-    $scope.audio.src = "http://localhost:8080/AudioPlayerProject/player/songCache/S2.mp3";
+    $scope.audio.controls = "true";
+
+    var elem = angular.element('#audioController');
+    elem.append($scope.audio);
+
 
     $scope.play = function () {
         $scope.audio.play();
         $scope.playing = true;
+    };
+
+    $scope.changeSrc = function (src) {
+        $scope.audio.src = src;
+        $scope.play();
     };
 
     $scope.stop = function () {

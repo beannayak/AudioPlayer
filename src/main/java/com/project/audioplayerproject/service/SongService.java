@@ -37,4 +37,16 @@ public class SongService {
     public Song update(Song song){
         return sd.update(song);
     }
+    
+    public void delete(Song song){
+        sd.delete(song);
+    }
+    
+    public long getLastInserted(){
+        return sd.lastIdInserted();
+    }
+    
+    public Song getSongByLocation(String location){
+        return sd.getSongByLocation(location);
+    }
 }

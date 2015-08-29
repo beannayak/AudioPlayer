@@ -27,3 +27,8 @@
     font-size: x-large;
     font-weight: 900;
 }
+
+audio {
+    width: 50%;
+    margin-top: 5px
+}
