@@ -37,11 +37,12 @@
                     <td style="text-align: right"><a href="${baseHome}player/numberOfSongs" style="color: #ffffff" >Last Song Added Number</a></td>
                 </tr>
             </table>
-                
+
         </div>
-        
-        <div id="audioController" style="clear: both; text-align: center">
-            
+
+        <div id="audioController" style="clear: both; text-align: center"> </div>
+        <div>
+            <button id="playAll" ng-click="playAll()">PlayAll</button>
         </div>
         <div style="color: #ffffff">
             <c:forEach var="song" items="${songs}">
@@ -59,7 +60,7 @@
                 </div>
             </c:forEach>
         </div>
-        
+
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
         <script src="${baseUrl}/js/splashOne.js"></script>

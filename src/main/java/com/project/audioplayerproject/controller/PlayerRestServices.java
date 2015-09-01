@@ -30,7 +30,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -110,10 +109,6 @@ public class PlayerRestServices {
         String loggedInUserName = auth.getName();
         String fileName = "/home/binayak/Desktop/songs/" + loggedInUserName + "/" + image + ".jpg";
         
-        /****************************/
-        //System.out.println("Image format is: " + getImageFormat(fileName));
-        /****************************/
-        
         response.setHeader("Content-Type", "image/jpeg");
         
         try {
@@ -137,7 +132,6 @@ public class PlayerRestServices {
     @RequestMapping (value = "/deleteSong", method = RequestMethod.GET)
     public @ResponseBody boolean deleteSong(@RequestParam String songName){
         
-        long val = Long.valueOf(songName.replace("S", ""));
         System.out.println("number value is: " + songName + ":" + songName.replace("S", ""));
         
         auth = SecurityContextHolder.getContext().getAuthentication();
@@ -169,5 +163,14 @@ public class PlayerRestServices {
         ss.delete(song);
         
         return flag;
+    }
+    
+    @RequestMapping (value="/getAllMusic", method = RequestMethod.GET)
+    public @ResponseBody List<Song> getAllSongs(){
+        auth = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = auth.getName();
+        
+        User user = us.getUserByUsername(loggedInUserName);
+        return user.getSongs();
     }
 }

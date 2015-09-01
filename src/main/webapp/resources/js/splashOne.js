@@ -10,33 +10,52 @@ app.controller("SplashController", function ($scope, $rootScope) {
 });
 
 var appOne = angular.module("linAppPlayer", []);
-appOne.controller("PlayerController", function ($scope, $rootScope) {
-    $scope.playing = true;
-    $scope.audio = document.createElement('audio');
-    $scope.audio.controls = "true";
-
-    var elem = angular.element('#audioController');
-    elem.append($scope.audio);
-
-
-    $scope.play = function () {
-        $scope.audio.play();
+appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $http) {
         $scope.playing = true;
-    };
+        $scope.audio = document.createElement('audio');
+        $scope.audio.controls = "true";
+        $scope.playAllSongs = false;
+        $scope.songsList = [];
 
-    $scope.changeSrc = function (src) {
-        $scope.audio.src = src;
-        $scope.play();
-    };
+        var elem = angular.element('#audioController');
+        elem.append($scope.audio);
 
-    $scope.stop = function () {
-        $scope.audio.pause();
-        $scope.playing = false;
-    };
+        $scope.playAll = function () {
+            $scope.playAllSongs = true;
 
-    $scope.audio.addEventListener('ended', function () {
-        $scope.$apply(function () {
-            $scope.stop();
+            $http({
+                url: "/AudioPlayerProject/api/getAllMusic",
+                method: "GET",
+            }).success(function (data, status, headers, config) {
+                $scope.songsList = data;
+                $scope.playAllSongs = true;
+                $scope.audio.src = songsList[0].location;
+                $scope.play()
+                
+            }).error(function (data, status, headers, config) {
+
+            });
+            //alert ($scope.songsList.length);
+        };
+
+        $scope.play = function () {
+            $scope.audio.play();
+            $scope.playing = true;
+        };
+
+        $scope.changeSrc = function (src) {
+            $scope.audio.src = src;
+            $scope.play();
+        };
+
+        $scope.stop = function () {
+            $scope.audio.pause();
+            $scope.playing = false;
+        };
+
+        $scope.audio.addEventListener('ended', function () {
+            $scope.$apply(function () {
+                $scope.stop();
+            });
         });
-    });
-});
+    }]);
