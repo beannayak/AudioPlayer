@@ -16,6 +16,7 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
         $scope.audio.controls = "true";
         $scope.playAllSongs = false;
         $scope.songsList = [];
+        $scope.playNumber = 0;
 
         var elem = angular.element('#audioController');
         elem.append($scope.audio);
@@ -29,13 +30,13 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
             }).success(function (data, status, headers, config) {
                 $scope.songsList = data;
                 $scope.playAllSongs = true;
-                $scope.audio.src = songsList[0].location;
+                $scope.audio.src = "/AudioPlayerProject/api/getSong/" + $scope.songsList[0].location + ".mp3";
+                $scope.playNumber = 0;
                 $scope.play()
                 
             }).error(function (data, status, headers, config) {
 
             });
-            //alert ($scope.songsList.length);
         };
 
         $scope.play = function () {
@@ -55,7 +56,13 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
 
         $scope.audio.addEventListener('ended', function () {
             $scope.$apply(function () {
-                $scope.stop();
+                $scope.playNumber += 1;
+                if ($scope.playAllSongs === true && $scope.songsList.length > $scope.playNumber){
+                    $scope.audio.src = "/AudioPlayerProject/api/getSong/" + $scope.songsList[$scope.playNumber].location + ".mp3";
+                    $scope.play();
+                } else {
+                    $scope.stop();
+                }
             });
         });
     }]);
