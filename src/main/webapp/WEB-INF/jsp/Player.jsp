@@ -13,6 +13,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <c:url var="baseUrl" value="/resources"/>
+        <c:url var="baseHome" value="/" />
+        <c:url var="logoutLink" value="${baseHome}j_spring_security_logout"/>
 
         <link rel="stylesheet" type="text/css" href="${baseUrl}/css/splash.css"> 
         <link rel="stylesheet" href="${baseUrl}/css/normalize.css">
@@ -22,43 +24,49 @@
     </head>
 
     <body style="background: url(${baseUrl}/img/background.jpg); margin: 15px" id="imgDiv" ng-controller="PlayerController">
-        <c:url var="baseHome" value="/" />
 
-        <!-- <div ng-controller="PlayerController">
-            <button ng-click="play()" ng-show="!playing">Play</button>
-            <button ng-click="stop()" ng-show="playing">Pause</button>
-        </div>-->
-
-        <div style="width: 100%">
-            <table style="width: 100%">
-                <tr>
-                    <td style="width: 33%; text-align: left"><a href='<c:url value="${baseHome}j_spring_security_logout"/>' > Logout</a></td>
-                    <td style="width: 33%; text-align: center"><a href="${baseHome}player/saveSong" style="color: #ffffff" >AddSong</a></td>
-                    <td style="text-align: right"><a href="${baseHome}player/numberOfSongs" style="color: #ffffff" >Last Song Added Number</a></td>
-                </tr>
-            </table>
-
+        <div id="header">
+            <div id="logoDiv">
+                <img style="margin: 8px; width: 140px; height: 80px" src="${baseUrl}/img/linapp.png" />
+            </div>
+            <div id="audioController"> 
+                <p ng-show="playing">Currently playing: {{playingSongTitle}}</p>
+            </div>
+            <div id="userInfo">
+                <p><a href='${logoutLink}' > Logout</a></p>
+                <p><a href="${baseHome}player/saveSong" style="color: #ffffff" >AddSong</a></p>
+            </div>
         </div>
-
-        <div id="audioController" style="clear: both; text-align: center"> </div>
-        <div>
-            <button id="playAll" ng-click="playAll()">PlayAll</button>
-        </div>
-        <div style="color: #ffffff">
-            <c:forEach var="song" items="${songs}">
-                <div style="border: #c6d626 dashed medium; margin: 5px;">
-                    <div style="display: block;">
-                        <img style="margin: 5px; float: left; width: 90px; height: 90px" src="${baseHome}api/getImage/${fn:replace(song.location, 'S', 'I')}.jpg" />
-                        <p>Title: ${song.title}</p>
-                        <p>Artist: ${song.artist}</p>
-                        <p>Album: ${song.album}</p>
-                        <p>location: <button style="color: #000000" ng-click="changeSrc('${baseHome}api/getSong/${song.location}.mp3')">${song.location}</button></p>
-                    </div>
-                    <div style="float: right">
-                        <p><a href="${baseHome}api/deleteSong?songName=${song.location}" style="color: white">delete This Song</a></p>
-                    </div>
+        <div id="content">
+            <div id="l_content"> 
+                <p class="myALink"><a href="#">Library</a></p>
+                <p class="myALink"><a href="#">PlayLists</a></p>
+            </div>
+            <div id="r_content"> 
+                <div>
+                    <button id="playAll" ng-click="playAll()">PlayAll</button>
                 </div>
-            </c:forEach>
+                <div style="color: #ffffff">
+                    <c:forEach var="song" items="${songs}">
+                        <div id="songContainer">
+                            <div id="songInfo">
+                                <img style="margin: 5px; float: left; width: 90px; height: 90px" src="${baseHome}api/getImage/${fn:replace(song.location, 'S', 'I')}.jpg" />
+                                <p>Title: ${song.title}</p>
+                                <p>Artist: ${song.artist}</p>
+                                <p>Album: ${song.album}</p>
+                            </div>
+                            <div id="songToolbox">
+                                <p><a href="" ng-click="changeSrc('${baseHome}api/getSong/${song.location}.mp3', '${song.title}')">Play</a></p>
+                                <p><a href="${baseHome}api/deleteSong?songName=${song.location}" style="color: white">delete</a></p>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <p>Linapp. Copyright &#169; Linapp Co ltd. </p>
         </div>
 
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

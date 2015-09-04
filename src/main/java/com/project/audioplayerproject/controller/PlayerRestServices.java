@@ -57,6 +57,7 @@ public class PlayerRestServices {
         String loggedInUserName = auth.getName();
         
         response.setHeader("Content-Type", "audio/mpeg");
+        System.out.println(song);
         try {
             InputStream in = new FileInputStream("/home/binayak/Desktop/songs/" + loggedInUserName + "/" + song + ".mp3");
             return IOUtils.toByteArray(in);

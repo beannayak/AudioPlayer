@@ -17,6 +17,7 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
         $scope.playAllSongs = false;
         $scope.songsList = [];
         $scope.playNumber = 0;
+        $scope.playingSongTitle = "";
 
         var elem = angular.element('#audioController');
         elem.append($scope.audio);
@@ -32,21 +33,23 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
                 $scope.playAllSongs = true;
                 $scope.audio.src = "/AudioPlayerProject/api/getSong/" + $scope.songsList[0].location + ".mp3";
                 $scope.playNumber = 0;
-                $scope.play()
+                $scope.play($scope.songsList[0].title);
                 
             }).error(function (data, status, headers, config) {
 
             });
         };
 
-        $scope.play = function () {
+        $scope.play = function (title) {
             $scope.audio.play();
             $scope.playing = true;
+            $scope.playingSongTitle = title;
         };
 
-        $scope.changeSrc = function (src) {
+        $scope.changeSrc = function (src, title) {
             $scope.audio.src = src;
-            $scope.play();
+            $scope.play(title);
+            $scope.playAllSongs = false;
         };
 
         $scope.stop = function () {
@@ -59,7 +62,7 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
                 $scope.playNumber += 1;
                 if ($scope.playAllSongs === true && $scope.songsList.length > $scope.playNumber){
                     $scope.audio.src = "/AudioPlayerProject/api/getSong/" + $scope.songsList[$scope.playNumber].location + ".mp3";
-                    $scope.play();
+                    $scope.play($scope.songsList[$scope.playNumber].title);
                 } else {
                     $scope.stop();
                 }

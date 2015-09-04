@@ -29,6 +29,127 @@
 }
 
 audio {
-    width: 50%;
+    width: 90%;
     margin-top: 5px
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+#header {
+    height: 100px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 2px #7e7070;
+    background-color: #e04848;
+}
+
+#logoDiv {
+    text-align: center;
+}
+
+#content {
+    width: 90%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 2px #7e7070;
+    overflow: hidden;
+}
+
+#l_content {
+    height: auto;
+    width: 25%;
+    float: left;
+    border: solid 2px #7e7070;
+    background-color: #3849a2;
+    padding-bottom: 500em;
+    margin-bottom: -500em;
+}
+
+#r_content {
+    height: auto;
+    width: 75%;
+    float: right;
+    border: solid 2px #7e7070;
+    background-color: #7c1919;
+    padding-bottom: 500em;
+    margin-bottom: -500em;
+}
+
+#footer {
+    clear: both;
+    height: 50px;
+    width: 90%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 2px #7e7070;
+    background-color: #155d35;
+    text-align: center;
+    color: white;
+    padding-top: 10px;
+    font-size: 1.5em;
+}
+
+#logoDiv {
+    height: 100%;
+    width: 20%;
+    float: left;
+    border: solid 2px #7e7070;
+}
+
+#audioController {
+    width: 72%;
+    float: left;
+    height: 100%;
+    padding-top: 30px;
+    text-align: center;
+    border: solid 2px #7e7070;
+}
+
+#userInfo {
+    height: 100%;
+    width: 8%;
+    float: right;
+    border: solid 2px #7e7070;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    padding: 5px;
+    padding-left: 15px;
+    border: solid 2px #7e7070;
+    color: white;
+    font-weight: bold;
+}
+
+.myALink {
+    padding-top: 1px; 
+    background-color: #007d71;
+}
+
+#songContainer {
+    border: #c6d626 dashed medium; 
+    padding: 0px;
+}
+
+#songInfo {
+    border: solid 2px #7e7070;
+    width: 82%;
+    float: left;
+    height: auto;
+}
+
+#songToolbox {
+    border: solid 2px #7e7070;
+    width: 18%;
+    float: right;
+    height: auto;
+    padding-top: 15px;
 }
