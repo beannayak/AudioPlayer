@@ -48,7 +48,7 @@
                 </div>
                 <div style="color: #ffffff">
                     <c:forEach var="song" items="${songs}">
-                        <div id="songContainer">
+                        <div class="songContainer" id="ramroo">
                             <div id="songInfo">
                                 <img style="margin: 5px; float: left; width: 90px; height: 90px" src="${baseHome}api/getImage/${fn:replace(song.location, 'S', 'I')}.jpg" />
                                 <p>Title: ${song.title}</p>
@@ -57,7 +57,7 @@
                             </div>
                             <div id="songToolbox">
                                 <p><a href="" ng-click="changeSrc('${baseHome}api/getSong/${song.location}.mp3', '${song.title}')">Play</a></p>
-                                <p><a href="${baseHome}api/deleteSong?songName=${song.location}" style="color: white">delete</a></p>
+                                <p><a href="" ng-click="deleteSong('${baseHome}api/deleteSong?songName=${song.location}', $event)" style="color: white">delete</a></p>
                             </div>
                             <div style="clear:both;"></div>
                         </div>
@@ -69,8 +69,13 @@
             <p>Linapp. Copyright &#169; Linapp Co ltd. </p>
         </div>
 
+        <div id="jptDialog"></div>
+
+        <link rel="stylesheet" href="${baseUrl}/css/sweetalert.css">
+        
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
         <script src="${baseUrl}/js/splashOne.js"></script>
+        <script src="${baseUrl}/js/sweetalert.min.js"></script>        
     </body>
 </html>

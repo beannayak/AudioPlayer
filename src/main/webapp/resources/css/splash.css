@@ -131,10 +131,10 @@ a {
 
 .myALink {
     padding-top: 1px; 
-    background-color: #007d71;
+    
 }
 
-#songContainer {
+.songContainer {
     border: #c6d626 dashed medium; 
     padding: 0px;
 }
@@ -147,9 +147,21 @@ a {
 }
 
 #songToolbox {
-    border: solid 2px #7e7070;
+    
     width: 18%;
     float: right;
     height: auto;
     padding-top: 15px;
+}
+
+#jptDialog {
+    border: solid 2px #7e7070;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 400px;
+    height: 400px;
+    background-color: #155d35;
+    z-index: 1;
+    visibility: hidden;
 }
