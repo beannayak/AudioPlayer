@@ -13,6 +13,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <c:url var="baseUrl" value="/resources"/>
+        <c:url var="baseHome" value="/" />
+        <c:url var="baseSpringSecurity" value="/j_spring_security_check" />
+        <c:url var="baseUserCreation" value="/usercreation/new" />
+        
         <link rel="stylesheet" type="text/css" href="${baseUrl}/css/splash.css"> 
         <link rel="stylesheet" href="${baseUrl}/css/normalize.css">
         <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
@@ -42,36 +46,39 @@
                         <div class="logmod__tab-wrapper">
                             <div class="logmod__tab lgm-1">
                                 <div class="logmod__heading">
-                                    <span class="logmod__heading-subtitle">Enter your personal details <strong>to create an acount</strong></span>
+                                    <span class="logmod__heading-subtitle">Enter your personal details <strong>to create an account</strong></span>
                                 </div>
                                 <div class="logmod__form">
                                     <!-- SignUp form -->
-                                    <form accept-charset="utf-8" action="#" class="simform">
+                                    <form accept-charset="utf-8" action="${baseUserCreation}" class="simform" method="POST">
                                         <div class="sminputs">
-                                            <div class="input full">
+                                            <div class="input string optional">
                                                 <label class="string optional" for="user-name">Username*</label>
-                                                <input class="string optional" maxlength="255" id="user-email" placeholder="Username" type="email" size="50" />
+                                                <input class="string optional" name="userName" maxlength="255" id="user-email" placeholder="Username" type="text" size="50" />
+                                            </div>
+                                             <div class="input string optional">
+                                                <label class="string optional" for="user-name">Email *</label>
+                                                <input class="string optional" name="email" name="email" maxlength="255" id="user-pw" placeholder="Email" type="email" size="50" />
                                             </div>
                                         </div>
                                         <div class="sminputs">
                                             <div class="input string optional">
                                                 <label class="string optional" for="user-pw">Password *</label>
-                                                <input class="string optional" maxlength="255" id="user-pw" placeholder="Password" type="text" size="50" />
+                                                <input class="string optional" name="password" maxlength="255" id="user-pw" placeholder="Password" type="password" size="50" />
                                             </div>
                                             <div class="input string optional">
                                                 <label class="string optional" for="user-pw-repeat">Repeat password *</label>
-                                                <input class="string optional" maxlength="255" id="user-pw-repeat" placeholder="Repeat password" type="text" size="50" />
+                                                <input class="string optional" name="repeatPassword" maxlength="255" id="user-pw-repeat" placeholder="Repeat password" type="password" size="50" />
                                             </div>
                                         </div>
                                         <div class="sminputs">
                                             <div class="input full">
                                                 <label class="string optional">Invitation-Code*</label>
-                                                <input class="string optional" maxlength="255" id="invitaiton-code" placeholder="Invitation Code" type="text" size="50" />
+                                                <input class="string optional" name="invitationCode" maxlength="255" id="invitaiton-code" placeholder="Invitation Code" type="text" size="50" />
                                             </div>
                                         </div>
                                         <div class="simform__actions">
-                                            <input class="sumbit" name="commit" type="sumbit" value="Create Account" />
-                                            <span class="simform__actions-sidetext">By creating an account you agree to our <a class="special" href="#" target="_blank" role="link">Terms & Privacy</a></span>
+                                            <input class="sumbit" type="submit" value="Create Account" />
                                         </div> 
                                     </form>
                                 </div> 
@@ -82,8 +89,8 @@
                                 </div> 
                                 <div class="logmod__form">
                                     <!-- Login Form -->
-                                    <c:url var="baseHome" value="/" />
-                                    <form accept-charset="utf-8" action="${baseHome}j_spring_security_check" class="simform" method="POST">
+                                    
+                                    <form accept-charset="utf-8" action="${baseSpringSecurity}" class="simform" method="POST">
                                         <div class="sminputs">
                                             <div class="input full">
                                                 <label class="string optional" for="user-name">Username*</label>
@@ -99,7 +106,6 @@
                                         </div>
                                         <div class="simform__actions">
                                             <input class="sumbit" type="submit" value="Log In" />
-                                            <!--                                            <span class="simform__actions-sidetext"><a class="special" role="link" href="#">Forgot your password?<br>Click here</a></span>-->
                                         </div> 
                                     </form>
                                 </div> 

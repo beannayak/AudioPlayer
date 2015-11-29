@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Authentication Error Page, Under construction</h1>
     </body>
 </html>

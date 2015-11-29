@@ -32,8 +32,11 @@ public class User {
     
     private String phone;
     
-    @OneToMany (cascade = CascadeType.PERSIST)
+    @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Song> songs;
+    
+    @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Playlist> playlists;
 
     public User() {
     }
@@ -84,5 +87,17 @@ public class User {
 
     public void addSongs(Song song) {
         this.songs.add(song);
+    }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+    
+    public void addPlaylist(Playlist playlist){
+        this.playlists.add(playlist);
     }
 }

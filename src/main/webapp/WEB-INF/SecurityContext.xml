@@ -11,19 +11,17 @@
     <http>
         <intercept-url pattern="/player/**" access="ROLE_USER" />
         <intercept-url pattern="/api/**" access="ROLE_USER" />
-        <access-denied-handler error-page="/403" />
-        <form-login login-page="/" authentication-failure-url="/403" default-target-url="/player/home" />
+        <form-login login-page="/" authentication-failure-url="/AuthenticationError" default-target-url="/player/home" />
         <logout logout-success-url="/" />
+        <access-denied-handler error-page="/403" />
     </http>
     
+    <beans:bean id="customAuthentationProvider" class="com.project.audioplayerproject.other.CustomAuthenticationProvider" >
+        <beans:constructor-arg ref="sessionFactory" />
+    </beans:bean>
     
     <authentication-manager  alias="authenticationManager">
-        <authentication-provider>
-            <user-service>
-                <user name="aUser" password="aUser" authorities="ROLE_USER" />
-                <user name="player" password="linapp" authorities="ROLE_USER" />
-            </user-service>
-        </authentication-provider>
+        <authentication-provider ref="customAuthentationProvider" />
     </authentication-manager>
 </beans:beans>
 

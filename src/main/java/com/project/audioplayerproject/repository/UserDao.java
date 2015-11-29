@@ -31,10 +31,13 @@ public class UserDao {
     public User getUserByUsername(String username){
         Query query = sf.getCurrentSession().createQuery("SELECT u FROM User u WHERE u.username = :name");
         query.setParameter("name", username);
+        if (query.list().size() < 1){
+            return null;
+        }
         return (User) query.list().get(0);
     }
     
     public User update(User user){
-        return (User)sf.getCurrentSession().merge(user);
+        return (User) sf.getCurrentSession().merge(user);
     }
 }

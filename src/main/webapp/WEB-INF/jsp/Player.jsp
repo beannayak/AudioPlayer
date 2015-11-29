@@ -46,7 +46,7 @@
                 <div>
                     <button id="playAll" ng-click="playAll()">PlayAll</button>
                 </div>
-                <div style="color: #ffffff">
+                <div id="songList" style="color: #ffffff">
                     <c:forEach var="song" items="${songs}">
                         <div class="songContainer" id="ramroo">
                             <div id="songInfo">

@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author binayak
  */
 @Entity
-public class Song {
+public class Song{
     @Id
     @GeneratedValue
     private long id;

@@ -137,6 +137,11 @@ a {
 .songContainer {
     border: #c6d626 dashed medium; 
     padding: 0px;
+    
+}
+
+#songList {
+    overflow-y: scroll;
 }
 
 #songInfo {
@@ -147,7 +152,6 @@ a {
 }
 
 #songToolbox {
-    
     width: 18%;
     float: right;
     height: auto;

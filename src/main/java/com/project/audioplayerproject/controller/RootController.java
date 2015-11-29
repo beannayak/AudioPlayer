@@ -20,6 +20,11 @@ public class RootController {
         return "403";
     }
     
+    @RequestMapping (value="/AuthenticationError", method=RequestMethod.GET)
+    public String authenticationError(){
+        return "AuthenticationError";
+    }
+    
     @RequestMapping (value="/check", method=RequestMethod.GET)
     public @ResponseBody TestDomain check(){
         TestDomain td = new TestDomain (5, "a text");

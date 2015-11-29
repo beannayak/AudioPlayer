@@ -10,6 +10,7 @@ import com.project.audioplayerproject.domain.Song;
 import com.project.audioplayerproject.domain.User;
 import com.project.audioplayerproject.service.SongService;
 import com.project.audioplayerproject.service.UserService;
+import com.project.audioplayerproject.utilities.ImageAndSongSaveUtility;
 import java.io.File;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +35,19 @@ public class PlayerController {
     Authentication auth;
     
     @Autowired
-    private UserService us;
+    private UserService userService;
     
     @Autowired
-    private SongService ss;
+    private ImageAndSongSaveUtility imageAndSongSaveUtility;
+    
+    @Autowired
+    private SongService songService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String playerLibrary(Model model) {
         auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserName = auth.getName();
-        model.addAttribute("songs", us.getUserByUsername(loggedInUserName).getSongs());
+        model.addAttribute("songs", userService.getUserByUsername(loggedInUserName).getSongs());
         return "Player";
     }
 
@@ -52,46 +56,42 @@ public class PlayerController {
         return "AddSong";
     }
 
-    @RequestMapping(value = "/numberOfSongs", method = RequestMethod.GET)
-    public @ResponseBody String saveSongPost() {
-        return Long.toString(ss.getTotalSongCount());
-    }
-    
     @RequestMapping(value = "/saveSong", method = RequestMethod.POST)
     public String saveSongPost(@ModelAttribute @Valid AddSong addSong, BindingResult bindingResult, Model model) {
-        System.out.println(addSong.getTitle());
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("addSong", addSong);
             return "AddSong";
         }
 
-        long nextVal = ss.getLastInserted() + 1;
+        long nextVal = songService.getLastInserted() + 1;
         auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserName = auth.getName();
-        User user = us.getUserByUsername(loggedInUserName);
+        User user = userService.getUserByUsername(loggedInUserName);        
         
-        /******************************/
-        System.out.println("User is: " + user.getUsername() + ", Phone: " + user.getPhone());
-        /******************************/
+        boolean isSongAndImageSaved = imageAndSongSaveUtility.saveImageAndSongToFileSystem(addSong, 
+                loggedInUserName, nextVal);
         
-        Song song = new Song(0, addSong.getTitle(), addSong.getArtist(), addSong.getAlbum(), ("S" + Long.toString(nextVal)));
-        ss.save(song);
-        
-        user.addSongs(song);
-        
-        us.update(user);
-        
-        try {
-            addSong.getSong().transferTo(new File("/home/binayak/Desktop/songs/" + loggedInUserName + "/S" + Long.toString(nextVal) + ".mp3"));
-            addSong.getAlbumCover().transferTo(new File("/home/binayak/Desktop/songs/" + loggedInUserName + "/I" + Long.toString(nextVal) + ".jpg"));
-        } catch (Exception e) {
-            return "403";
+        if (isSongAndImageSaved){
+            saveSongAndImageValuesToDatabaseOfUser(addSong, user, nextVal);
         }
-
+        
+        //TODO: if not saved, then display error message saying its not saved
+        //Make a common error page, where message can be displayed, 
+        //or goto previous page and change sth again, or goto home or any other pages
+        
         return "redirect:/player/home";
     }
+    
+    @RequestMapping(value = "/numberOfSongs", method = RequestMethod.GET)
+    public @ResponseBody String saveSongPost() {
+        return Long.toString(songService.getTotalSongCount());
+    }
 
-    
-    
+    private void saveSongAndImageValuesToDatabaseOfUser(AddSong addSong, User user, long nextVal) {
+        Song song = new Song(0, addSong.getTitle(), addSong.getArtist(), addSong.getAlbum(), 
+                ("S" + Long.toString(nextVal)));
+        songService.save(song);
+        user.addSongs(song);
+        userService.update(user);
+    }
 }
