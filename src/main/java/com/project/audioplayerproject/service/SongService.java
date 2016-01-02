@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.project.audioplayerproject.service;
 
 import com.project.audioplayerproject.domain.Song;
@@ -12,41 +7,37 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author binayak
- */
 @Service
 @Transactional (propagation = Propagation.REQUIRES_NEW)
 public class SongService {
     @Autowired
-    private SongDao sd;
+    private SongDao songDao;
     
     public void save(Song song){
-        sd.persist(song);
+        songDao.persist(song);
     }
     
     public Song getSongById(long id){
-        return sd.getSongById(id);
+        return songDao.getSongById(id);
     }
     
     public long getTotalSongCount(){
-        return sd.getTotalSongCount();
+        return songDao.getTotalSongCount();
     }
     
     public Song update(Song song){
-        return sd.update(song);
+        return songDao.update(song);
     }
     
     public void delete(Song song){
-        sd.delete(song);
+        songDao.delete(song);
     }
     
     public long getLastInserted(){
-        return sd.lastIdInserted();
+        return songDao.lastIdInserted();
     }
     
     public Song getSongByLocation(String location){
-        return sd.getSongByLocation(location);
+        return songDao.getSongByLocation(location);
     }
 }

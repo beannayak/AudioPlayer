@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.project.audioplayerproject.utilities;
 
 import com.project.audioplayerproject.controller.PlayerRestServices;
@@ -15,10 +10,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
-/**
- *
- * @author binayak
- */
 public class ImageManipulationUtility {
     
     public String getImageFormat (String filename){

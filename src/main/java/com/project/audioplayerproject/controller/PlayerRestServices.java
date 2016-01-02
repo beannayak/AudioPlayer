@@ -25,20 +25,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- *
- * @author binayak
- */
 @Controller
 @RequestMapping ("/api")
 public class PlayerRestServices {
     Authentication auth;
     
     @Autowired
-    private UserService us;
+    private UserService userService;
     
     @Autowired
-    private SongService ss;
+    private SongService songService;
     
     @Autowired
     private ImageAndSongRetrieverUtility imageAndSongRetrieverUtility;
@@ -71,7 +67,7 @@ public class PlayerRestServices {
         auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserName = auth.getName();
         
-        User user = us.getUserByUsername(loggedInUserName);
+        User user = userService.getUserByUsername(loggedInUserName);
         return user.getSongs();
     }
     
@@ -80,15 +76,17 @@ public class PlayerRestServices {
         auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserName = auth.getName();
         
-        User user = us.getUserByUsername(loggedInUserName);
-        Song song = ss.getSongByLocation(songName);
+        User user = userService.getUserByUsername(loggedInUserName);
+        Song song = songService.getSongByLocation(songName);
              
         imageAndSongDeleteUtility.deleteImageAssociatedWithSongAndReturnResult(loggedInUserName, songName);
         boolean flag = imageAndSongDeleteUtility.deleteSongAndReturnResult(loggedInUserName, songName);
         
-        user.getSongs().remove(song);
-        us.update(user);
-        ss.delete(song);
+        if (flag) {
+            user.getSongs().remove(song);
+            userService.update(user);
+            songService.delete(song);
+        }
         
         return flag;
     }
@@ -98,7 +96,7 @@ public class PlayerRestServices {
         auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserName = auth.getName();
         
-        User user = us.getUserByUsername(loggedInUserName);
+        User user = userService.getUserByUsername(loggedInUserName);
         return user.getSongs();
     }
 }

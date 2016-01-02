@@ -11,7 +11,6 @@ import com.project.audioplayerproject.domain.User;
 import com.project.audioplayerproject.service.SongService;
 import com.project.audioplayerproject.service.UserService;
 import com.project.audioplayerproject.utilities.ImageAndSongSaveUtility;
-import java.io.File;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -32,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/player")
 public class PlayerController {
 
-    Authentication auth;
+    Authentication authentication;
     
     @Autowired
     private UserService userService;
@@ -45,9 +44,14 @@ public class PlayerController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String playerLibrary(Model model) {
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        String loggedInUserName = auth.getName();
-        model.addAttribute("songs", userService.getUserByUsername(loggedInUserName).getSongs());
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = authentication.getName();
+        User loggedInUser = userService.getUserByUsername(loggedInUserName);
+        if (loggedInUser != null) {
+            model.addAttribute("songs", loggedInUser.getSongs());
+        } else {
+            model.addAttribute("songs", null);
+        }
         return "Player";
     }
 
@@ -64,8 +68,8 @@ public class PlayerController {
         }
 
         long nextVal = songService.getLastInserted() + 1;
-        auth = SecurityContextHolder.getContext().getAuthentication();
-        String loggedInUserName = auth.getName();
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = authentication.getName();
         User user = userService.getUserByUsername(loggedInUserName);        
         
         boolean isSongAndImageSaved = imageAndSongSaveUtility.saveImageAndSongToFileSystem(addSong, 

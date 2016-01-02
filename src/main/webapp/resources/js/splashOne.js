@@ -103,4 +103,8 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
                 }
             });
         };
+        
+        $scope.contextMenuPopUp = function (songLocation){
+            console.log(songLocation + " tried to popup context menu.")
+        };
     }]);

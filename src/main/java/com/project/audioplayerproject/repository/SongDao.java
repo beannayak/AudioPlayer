@@ -1,22 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.project.audioplayerproject.repository;
 
 import com.project.audioplayerproject.domain.Song;
-import com.project.audioplayerproject.domain.User;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author binayak
- */
 @Repository
 public class SongDao {
     @Autowired
@@ -43,7 +33,13 @@ public class SongDao {
     }
     
     public long lastIdInserted(){
-        return (Long) sf.getCurrentSession().createQuery("select max(id) from Song").uniqueResult();
+        Long lastIdInserted = null;
+        
+        lastIdInserted = (Long) sf.getCurrentSession().createQuery("select max(id) from Song").uniqueResult();
+        if (lastIdInserted == null){
+            return 0;
+        }
+        return lastIdInserted;
     }
     
     public Song getSongByLocation(String location){

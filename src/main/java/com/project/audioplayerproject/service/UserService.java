@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.project.audioplayerproject.service;
 
 import com.project.audioplayerproject.domain.NewUser;
 import com.project.audioplayerproject.domain.User;
+import com.project.audioplayerproject.domain.UserCredientials;
+import com.project.audioplayerproject.repository.UserCredientialsDao;
 import com.project.audioplayerproject.repository.UserDao;
 import com.project.audioplayerproject.utilities.FileSystemManager;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,26 +20,29 @@ public class UserService {
     private FileSystemManager fileSystemManager;
     
     @Autowired
-    private UserDao ud;
+    private UserDao userDao;
+    
+    @Autowired
+    private UserCredientialsDao userCredentialsDao;
     
     public void save(User user){
-        ud.persist(user);
+        userDao.persist(user);
     }
     
     public User getUserById(long id){
-        return ud.getUserById(id);
+        return userDao.getUserById(id);
     }
     
     public User getUserByUsername (String username){
-        return ud.getUserByUsername(username);
+        return userDao.getUserByUsername(username);
     }
     
     public User update(User user){
-        return ud.update(user);
+        return userDao.update(user);
     }
     
     public boolean isUserNameAlreadyTaken(String userName){
-        return ud.getUserByUsername(userName) != null;
+        return userDao.getUserByUsername(userName) != null;
     }
 
     public void addNewUser(NewUser newUser) {
@@ -52,8 +53,13 @@ public class UserService {
             user.setUsername(newUser.getUserName());
             user.setEmail(newUser.getEmail());
             user.setPhone(null);
-            //TODO: addPassword to password table
             save(user);
+            
+            UserCredientials userCredentials = new UserCredientials();
+            userCredentials.setUserName(newUser.getUserName());
+            userCredentials.setPasswordHash(BCrypt.hashpw(newUser.getPassword(), BCrypt.gensalt()));
+            userCredentials.setRoles("ROLE_USER");
+            userCredentialsDao.persist(userCredentials);
         }
     }
 }

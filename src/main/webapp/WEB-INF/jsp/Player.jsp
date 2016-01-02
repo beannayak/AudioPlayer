@@ -50,7 +50,7 @@
                     <c:forEach var="song" items="${songs}">
                         <div class="songContainer" id="ramroo">
                             <div id="songInfo">
-                                <img style="margin: 5px; float: left; width: 90px; height: 90px" src="${baseHome}api/getImage/${fn:replace(song.location, 'S', 'I')}.jpg" />
+                                <img class="albumArt" src="${baseHome}api/getImage/${fn:replace(song.location, 'S', 'I')}.jpg" />
                                 <p>Title: ${song.title}</p>
                                 <p>Artist: ${song.artist}</p>
                                 <p>Album: ${song.album}</p>
@@ -58,6 +58,7 @@
                             <div id="songToolbox">
                                 <p><a href="" ng-click="changeSrc('${baseHome}api/getSong/${song.location}.mp3', '${song.title}')">Play</a></p>
                                 <p><a href="" ng-click="deleteSong('${baseHome}api/deleteSong?songName=${song.location}', $event)" style="color: white">delete</a></p>
+                                <p><a href="" ng-click="contextMenuPopUp('${song.location}')" style="color: white">...</a></p>
                             </div>
                             <div style="clear:both;"></div>
                         </div>

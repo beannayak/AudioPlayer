@@ -1,17 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.project.audioplayerproject.other;
 
-import com.project.audioplayerproject.domain.User;
+import com.project.audioplayerproject.domain.UserCredientials;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,27 +39,23 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
 
         Session session;
-        User user = null;
+        UserCredientials userCredentials = null;
         try {
             session = sf.openSession();
             Transaction tx = session.beginTransaction();
-            Query query = session.createQuery("from User where userName = :uname");
-            query.setParameter("uname", name);
             
-            user = (User) query.list().get(0);
+            Query query = session.createQuery("from UserCredientials where userName = :uname");
+            query.setParameter("uname", name);
+            userCredentials = (UserCredientials) query.list().get(0);
+            
             tx.commit();
         } catch (Exception e) {
             System.out.println("Exception occured: " + e.getMessage());
         }
 
-        if (name.equals("aUser") && password.equals("aUser")) {
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-        } else if (name.equals("linapp") && password.equals("linapp")) {
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-        } else if (user != null) {
-            if (password.equals("123")) {
-                grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-            }
+        if (userCredentials != null && name.equals(userCredentials.getUserName()) 
+                && BCrypt.checkpw(password, userCredentials.getPasswordHash())) {
+            grantedAuths.add(new SimpleGrantedAuthority(userCredentials.getRoles()));
         } else {
             throw new BadCredentialsException("Bad Credentials");
         }

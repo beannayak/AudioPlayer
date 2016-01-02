@@ -9,6 +9,7 @@ import com.project.audioplayerproject.domain.NewUser;
 import com.project.audioplayerproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -19,13 +20,18 @@ public class NewUserCreationController {
     UserService userService;
     
     @RequestMapping("/new")
-    public String createNewUser (NewUser newUser) {
+    public String createNewUser (NewUser newUser, Model model) {
+        String message = null;
         if (!userService.isUserNameAlreadyTaken(newUser.getUserName()) 
-                && newUser.getInvitationCode().equals("3792")){
+                && "3792".equals(newUser.getInvitationCode())){
             userService.addNewUser(newUser);
             return "Player";
+        } else if (userService.isUserNameAlreadyTaken(newUser.getUserName())){
+            message = "Username is already taken"; 
+        } else if (!"3792".equals(newUser.getInvitationCode())) {
+            message = "Invalid invitation code";
         }
-        
-        return "SplashScreen";
+        model.addAttribute("message", message);
+        return "AuthenticationError";
     }
 }

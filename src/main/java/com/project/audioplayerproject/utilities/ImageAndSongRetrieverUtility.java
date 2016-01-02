@@ -16,6 +16,7 @@ public class ImageAndSongRetrieverUtility {
             throws ResourceNotFoundException{
         try {
             String filePath = String.format(SONG_STRING_FORMAT, loggedInUserName, songName);
+            System.out.println("song: " + filePath);
             InputStream in = new FileInputStream(filePath);
             return IOUtils.toByteArray(in);
         } catch (IOException e){
@@ -26,6 +27,7 @@ public class ImageAndSongRetrieverUtility {
     
     public byte[] getImageWithLoggedInUserAndImageName (String loggedInUserName, String imageName){
         String filePath = String.format(IMAGE_STRING_FORMAT, loggedInUserName, imageName);
+        System.out.println("image: " + filePath);
         try {
             InputStream in = new FileInputStream(filePath);
             return IOUtils.toByteArray(in);
