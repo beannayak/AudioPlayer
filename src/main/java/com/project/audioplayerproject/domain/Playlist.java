@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -19,19 +21,33 @@ public class Playlist {
     @NotEmpty
     private String name;
     
-    @OneToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany
+    @JsonIgnore
     private List<Song> songs;
+    
+    @ManyToOne 
+    @JsonIgnore
+    private User user;
 
     public Playlist() {
         songs = new ArrayList<>();
     }
 
-    public Playlist(long id, String name) {
+    public Playlist(long id, String name, User user) {
         this.id = id;
         this.name = name;
         this.songs = new ArrayList<>();
+        this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     public long getId() {
         return id;
     }

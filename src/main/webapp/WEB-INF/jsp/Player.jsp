@@ -41,6 +41,11 @@
             <div id="l_content"> 
                 <p class="myALink"><a href="#">Library</a></p>
                 <p class="myALink"><a href="#">PlayLists</a></p>
+                <div class="playlists">
+                    <c:forEach var="playlist" items="${playlists}">
+                        <p class="myALink"><a href="#">> ${playlist.name}, ${playlist.id}</a></p>
+                    </c:forEach>
+                </div>
             </div>
             <div id="r_content"> 
                 <div>

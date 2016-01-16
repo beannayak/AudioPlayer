@@ -155,7 +155,8 @@ a {
     width: 18%;
     float: right;
     height: auto;
-    padding-top: 15px;
+    padding-top: 0px;
+    line-height: 137%;
 }
 
 #jptDialog {
@@ -168,4 +169,11 @@ a {
     background-color: #155d35;
     z-index: 1;
     visibility: hidden;
+}
+
+.albumArt {
+    margin: 5px; 
+    float: left; 
+    width: 90px; 
+    height: 91px
 }

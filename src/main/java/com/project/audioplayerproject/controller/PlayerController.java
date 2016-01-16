@@ -49,8 +49,10 @@ public class PlayerController {
         User loggedInUser = userService.getUserByUsername(loggedInUserName);
         if (loggedInUser != null) {
             model.addAttribute("songs", loggedInUser.getSongs());
+            model.addAttribute("playlists", loggedInUser.getPlaylists());
         } else {
             model.addAttribute("songs", null);
+            model.addAttribute("playlists", null);
         }
         return "Player";
     }
@@ -90,10 +92,10 @@ public class PlayerController {
     public @ResponseBody String saveSongPost() {
         return Long.toString(songService.getTotalSongCount());
     }
-
+    
     private void saveSongAndImageValuesToDatabaseOfUser(AddSong addSong, User user, long nextVal) {
         Song song = new Song(0, addSong.getTitle(), addSong.getArtist(), addSong.getAlbum(), 
-                ("S" + Long.toString(nextVal)));
+                ("S" + Long.toString(nextVal)), user);
         songService.save(song);
         user.addSongs(song);
         userService.update(user);

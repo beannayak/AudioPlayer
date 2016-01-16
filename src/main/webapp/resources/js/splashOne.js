@@ -26,7 +26,7 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
             $scope.playAllSongs = true;
 
             $http({
-                url: "/AudioPlayerProject/api/getAllMusic",
+                url: "/AudioPlayerProject/api/getAllSongs",
                 method: "GET",
             }).success(function (data, status, headers, config) {
                 $scope.songsList = data;

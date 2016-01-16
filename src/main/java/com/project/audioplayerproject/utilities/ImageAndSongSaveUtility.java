@@ -4,6 +4,7 @@ import com.project.audioplayerproject.domain.AddSong;
 import java.io.File;
 import java.io.IOException;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ImageAndSongSaveUtility {
@@ -19,6 +20,17 @@ public class ImageAndSongSaveUtility {
         try {
             addSong.getSong().transferTo(new File(songFileAndLocation));
             addSong.getAlbumCover().transferTo(new File(imageFileAndLocation));
+        } catch (IOException | IllegalStateException e ) {
+            return false;
+        } 
+        return true;
+    }
+    
+    public boolean saveImageOnly(MultipartFile albumArt, String loggedInUserName, long songNumber){
+        String imageName = "I" + Long.toString(songNumber);
+        String imageFileAndLocation = String.format(IMAGE_FORMAT, loggedInUserName, imageName);
+        try {
+            albumArt.transferTo(new File(imageFileAndLocation));
         } catch (IOException | IllegalStateException e ) {
             return false;
         } 

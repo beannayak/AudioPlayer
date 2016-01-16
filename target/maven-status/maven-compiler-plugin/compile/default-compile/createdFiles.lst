@@ -1,5 +1,6 @@
 com/project/audioplayerproject/repository/SongDao.class
 com/project/audioplayerproject/controller/NewUserCreationController.class
+com/project/audioplayerproject/repository/UserCredientialsDao.class
 com/project/audioplayerproject/domain/User.class
 com/project/audioplayerproject/controller/PlayerRestServices.class
 com/project/audioplayerproject/utilities/AllUtilitiesProperties.class
@@ -20,5 +21,6 @@ com/project/audioplayerproject/utilities/ImageAndSongSaveUtility.class
 com/project/audioplayerproject/domain/Song.class
 com/project/audioplayerproject/service/UserService.class
 com/project/audioplayerproject/utilities/ImageAndSongRetrieverUtility.class
+com/project/audioplayerproject/domain/UserCredientials.class
 com/project/audioplayerproject/domain/Playlist.class
 com/project/audioplayerproject/other/ResourceNotFoundException.class

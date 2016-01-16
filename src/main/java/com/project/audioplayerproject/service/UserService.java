@@ -1,11 +1,13 @@
 package com.project.audioplayerproject.service;
 
 import com.project.audioplayerproject.domain.NewUser;
+import com.project.audioplayerproject.domain.Playlist;
 import com.project.audioplayerproject.domain.User;
 import com.project.audioplayerproject.domain.UserCredientials;
 import com.project.audioplayerproject.repository.UserCredientialsDao;
 import com.project.audioplayerproject.repository.UserDao;
 import com.project.audioplayerproject.utilities.FileSystemManager;
+import java.util.Arrays;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional (propagation = Propagation.REQUIRES_NEW)
 public class UserService {
-    
     @Autowired
     private FileSystemManager fileSystemManager;
     
@@ -24,6 +25,9 @@ public class UserService {
     
     @Autowired
     private UserCredientialsDao userCredentialsDao;
+    
+    @Autowired
+    private PlaylistService playlistService;
     
     public void save(User user){
         userDao.persist(user);
@@ -60,6 +64,23 @@ public class UserService {
             userCredentials.setPasswordHash(BCrypt.hashpw(newUser.getPassword(), BCrypt.gensalt()));
             userCredentials.setRoles("ROLE_USER");
             userCredentialsDao.persist(userCredentials);
+        } else {
+            System.out.println("User dir creation failed");
         }
+    }
+
+    public boolean createANewPlaylist(String playlistName, String userName) {
+        User user = getUserByUsername(userName);
+        Playlist playlist = new Playlist(0, playlistName, user);
+        
+        try {
+            user.addPlaylist(playlist);
+            update(user);
+        } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
+            return false;
+        }
+        
+        return true;
     }
 }
