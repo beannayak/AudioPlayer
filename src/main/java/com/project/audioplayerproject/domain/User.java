@@ -94,4 +94,16 @@ public class User {
     public void addPlaylist(Playlist playlist){
         this.playlists.add(playlist);
     }
+    
+    public void removeSong(Song song) {
+        if (songs.contains(song)) {
+            songs.remove(song);
+        }
+    }
+    
+    public void removePlaylist (Playlist playlist) {
+        if (playlists.contains(playlist)) {
+            playlists.remove(playlist);
+        }
+    }
 }

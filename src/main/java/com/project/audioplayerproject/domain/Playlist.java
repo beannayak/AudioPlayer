@@ -1,5 +1,6 @@
 package com.project.audioplayerproject.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -7,13 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Playlist {
+public class Playlist implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
@@ -21,7 +22,7 @@ public class Playlist {
     @NotEmpty
     private String name;
     
-    @OneToMany
+    @ManyToMany (cascade = CascadeType.DETACH)
     @JsonIgnore
     private List<Song> songs;
     
@@ -74,5 +75,11 @@ public class Playlist {
     
     public void addSong(Song song){
         this.songs.add(song);
+    }
+    
+    public void removeSong(Song song) {
+        if (this.songs.contains(song)) {
+            this.songs.remove(song);
+        }
     }
 }

@@ -39,11 +39,11 @@
         </div>
         <div id="content">
             <div id="l_content"> 
-                <p class="myALink"><a href="#">Library</a></p>
+                <p class="myALink"><a href="" ng-click="changePlaylist('${baseHome}api/getAllSongs')">Library</a></p>
                 <p class="myALink"><a href="#">PlayLists</a></p>
                 <div class="playlists">
                     <c:forEach var="playlist" items="${playlists}">
-                        <p class="myALink"><a href="#">> ${playlist.name}, ${playlist.id}</a></p>
+                        <p class="myALink"><a href="" ng-click="changePlaylist('${baseHome}api/getSongsFromPlaylist?playlistId=${playlist.id}')">> ${playlist.name}, ${playlist.id}</a></p>
                     </c:forEach>
                 </div>
             </div>
@@ -52,22 +52,20 @@
                     <button id="playAll" ng-click="playAll()">PlayAll</button>
                 </div>
                 <div id="songList" style="color: #ffffff">
-                    <c:forEach var="song" items="${songs}">
-                        <div class="songContainer" id="ramroo">
-                            <div id="songInfo">
-                                <img class="albumArt" src="${baseHome}api/getImage/${fn:replace(song.location, 'S', 'I')}.jpg" />
-                                <p>Title: ${song.title}</p>
-                                <p>Artist: ${song.artist}</p>
-                                <p>Album: ${song.album}</p>
-                            </div>
-                            <div id="songToolbox">
-                                <p><a href="" ng-click="changeSrc('${baseHome}api/getSong/${song.location}.mp3', '${song.title}')">Play</a></p>
-                                <p><a href="" ng-click="deleteSong('${baseHome}api/deleteSong?songName=${song.location}', $event)" style="color: white">delete</a></p>
-                                <p><a href="" ng-click="contextMenuPopUp('${song.location}')" style="color: white">...</a></p>
-                            </div>
-                            <div style="clear:both;"></div>
+                    <div class="songContainer" id="ramroo" ng-repeat="song in songsList">
+                        <div id="songInfo">
+                            <img class="albumArt" ng-src="${baseHome}api/getImage/{{getImageNameFromLocation(song.location)}}.jpg" />
+                            <p>Title: {{song.title}}</p>
+                            <p>Artist: {{song.artist}}</p>
+                            <p>Album: {{song.album}}</p>
                         </div>
-                    </c:forEach>
+                        <div id="songToolbox" >
+                            <p class="ng-binding"><a href="" class="ng-binding" ng-click="changeSrc(getConcatedLocation('${baseHome}api/getSong/', song.location, '.mp3'), song.title)">Play</a></p>
+                            <p class="ng-binding"><a href="" class="ng-binding" ng-click="deleteSong(getConcatedLocation('${baseHome}api/deleteSong?songName=', song.location, ''), $event)" style="color: white">delete</a></p>
+                            <p class="ng-binding"><a href="" class="ng-binding" ng-click="contextMenuPopUp(song.location)" style="color: white">...</a></p>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,7 +76,7 @@
         <div id="jptDialog"></div>
 
         <link rel="stylesheet" href="${baseUrl}/css/sweetalert.css">
-        
+
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
         <script src="${baseUrl}/js/splashOne.js"></script>

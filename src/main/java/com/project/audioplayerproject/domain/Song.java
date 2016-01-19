@@ -1,14 +1,18 @@
 package com.project.audioplayerproject.domain;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-public class Song{
+public class Song implements Serializable{
     @Id
     @GeneratedValue
     private long id;
@@ -19,6 +23,9 @@ public class Song{
     private String artist;
     private String album;
     private String location;
+    
+    @ManyToMany (mappedBy = "songs", cascade = CascadeType.DETACH)
+    private List<Playlist> playlists;
     
     @ManyToOne
     @JsonIgnore
@@ -82,5 +89,19 @@ public class Song{
 
     public void setLocation(String location) {
         this.location = location;
+    }
+        
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+    
+    public void removePlaylist(Playlist playlist) {
+        if (playlists.contains(playlist)){
+            playlists.remove(playlist);
+        }
     }
 }

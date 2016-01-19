@@ -21,29 +21,49 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
 
         var elem = angular.element('#audioController');
         elem.append($scope.audio);
+        
+        $http({
+            url: "/AudioPlayerProject/api/getAllSongs",
+            method: "GET"
+        }).success(function (data, status, headers, config) {
+            $scope.songsList = data;
+        }).error(function (data, status, headers, config) {
 
+        });
+        
+        $scope.getImageNameFromLocation = function (location) {
+            var indexPos = "I" + location.substring(1);
+            return indexPos;
+        };
+        
+        $scope.getConcatedLocation = function (location, name, extension) {
+            return location + name + extension;
+        };
+        
         $scope.playAll = function () {
             $scope.playAllSongs = true;
-
-            $http({
-                url: "/AudioPlayerProject/api/getAllSongs",
-                method: "GET",
-            }).success(function (data, status, headers, config) {
-                $scope.songsList = data;
-                $scope.playAllSongs = true;
-                $scope.audio.src = "/AudioPlayerProject/api/getSong/" + $scope.songsList[0].location + ".mp3";
-                $scope.playNumber = 0;
-                $scope.play($scope.songsList[0].title);
-
-            }).error(function (data, status, headers, config) {
-
-            });
+            
+            $scope.playAllSongs = true;
+            $scope.audio.src = "/AudioPlayerProject/api/getSong/" + $scope.songsList[0].location + ".mp3";
+            $scope.playNumber = 0;
+            $scope.play($scope.songsList[0].title);
         };
 
         $scope.play = function (title) {
             $scope.audio.play();
             $scope.playing = true;
             $scope.playingSongTitle = title;
+        };
+
+        $scope.changePlaylist = function (src) {
+            $http({
+                url: src,
+                method: "GET"
+            }).success(function (data, status, headers, config) {
+                $scope.songsList = data;
+            }).error(function (data, status, headers, config) {
+
+            });
         };
 
         $scope.changeSrc = function (src, title) {
@@ -105,6 +125,15 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
         };
         
         $scope.contextMenuPopUp = function (songLocation){
-            console.log(songLocation + " tried to popup context menu.")
+            
+            $http({
+                url: "/AudioPlayerProject/api/addSongToPlaylist?songName=" + songLocation + "&playlistId=5",
+                method: "GET"
+            }).success(function (data, status, headers, config) {
+                $scope.songsList = data;
+                console.log(songLocation + " added to playlist 4");
+            }).error(function (data, status, headers, config) {
+                console.log(songLocation + " NOT added to playlist 4");
+            }); 
         };
     }]);
