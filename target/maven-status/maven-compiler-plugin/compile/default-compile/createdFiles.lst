@@ -19,6 +19,7 @@ com/project/audioplayerproject/domain/AddSong.class
 com/project/audioplayerproject/controller/RootController.class
 com/project/audioplayerproject/utilities/ImageAndSongSaveUtility.class
 com/project/audioplayerproject/domain/Song.class
+com/project/audioplayerproject/controller/RhythmController.class
 com/project/audioplayerproject/service/UserService.class
 com/project/audioplayerproject/utilities/ImageAndSongRetrieverUtility.class
 com/project/audioplayerproject/domain/UserCredientials.class

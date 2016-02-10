@@ -7,7 +7,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html ng-app="linAppPlayer">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -24,7 +23,6 @@
     </head>
 
     <body style="background: url(${baseUrl}/img/background.jpg); margin: 15px" id="imgDiv" ng-controller="PlayerController">
-
         <div id="header">
             <div id="logoDiv">
                 <img style="margin: 8px; width: 140px; height: 80px" src="${baseUrl}/img/linapp.png" />
@@ -73,7 +71,9 @@
             <p>Linapp. Copyright &#169; Linapp Co ltd. </p>
         </div>
 
-        <div id="jptDialog"></div>
+        <div id="jptDialog">
+            <a ng-click="hideMe($event)" href="">Hide</a>
+        </div>
 
         <link rel="stylesheet" href="${baseUrl}/css/sweetalert.css">
 

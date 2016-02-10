@@ -25,6 +25,7 @@ public class Song implements Serializable{
     private String location;
     
     @ManyToMany (mappedBy = "songs", cascade = CascadeType.DETACH)
+    @JsonIgnore
     private List<Playlist> playlists;
     
     @ManyToOne

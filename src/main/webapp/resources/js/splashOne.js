@@ -11,6 +11,8 @@ app.controller("SplashController", function ($scope, $rootScope) {
 
 var appOne = angular.module("linAppPlayer", []);
 appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $http) {
+        angular.element('#jptDialog').hide();
+        
         $scope.playing = true;
         $scope.audio = document.createElement('audio');
         $scope.audio.controls = "true";
@@ -125,15 +127,11 @@ appOne.controller("PlayerController", ['$scope', '$http', function ($scope, $htt
         };
         
         $scope.contextMenuPopUp = function (songLocation){
-            
-            $http({
-                url: "/AudioPlayerProject/api/addSongToPlaylist?songName=" + songLocation + "&playlistId=5",
-                method: "GET"
-            }).success(function (data, status, headers, config) {
-                $scope.songsList = data;
-                console.log(songLocation + " added to playlist 4");
-            }).error(function (data, status, headers, config) {
-                console.log(songLocation + " NOT added to playlist 4");
-            }); 
+            console.log(angular.element('#jptDialog'));
+            angular.element('#jptDialog').fadeIn();
+        };
+        
+        $scope.hideMe = function (objectThis)  {
+            angular.element(objectThis.target.parentNode).fadeOut();
         };
     }]);

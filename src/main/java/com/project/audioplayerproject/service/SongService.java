@@ -47,8 +47,6 @@ public class SongService {
             playlist.removeSong(song);
             playlistService.update(playlist);
         }
-        //song.setPlaylists(null);
-        //songDao.update(song);
         sf.getCurrentSession().flush();
         songDao.delete(song);
     }

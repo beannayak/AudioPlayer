@@ -168,7 +168,6 @@ a {
     height: 400px;
     background-color: #155d35;
     z-index: 1;
-    visibility: hidden;
 }
 
 .albumArt {
@@ -176,4 +175,11 @@ a {
     float: left; 
     width: 90px; 
     height: 91px
+}
+
+#choosePlaylist {
+   position: absolute;
+   
+   width: 900px; 
+   height: 910px 
 }
