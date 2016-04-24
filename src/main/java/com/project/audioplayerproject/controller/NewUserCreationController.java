@@ -28,7 +28,7 @@ public class NewUserCreationController {
             return "Player";
         } else if (userService.isUserNameAlreadyTaken(newUser.getUserName())){
             message = "Username is already taken"; 
-        } else if (!"3792".equals(newUser.getInvitationCode())) {
+        } else if (!"3794".equals(newUser.getInvitationCode())) {
             message = "Invalid invitation code";
         }
         model.addAttribute("message", message);
