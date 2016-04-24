@@ -23,7 +23,7 @@ public class NewUserCreationController {
     public String createNewUser (NewUser newUser, Model model) {
         String message = null;
         if (!userService.isUserNameAlreadyTaken(newUser.getUserName()) 
-                && "3792".equals(newUser.getInvitationCode())){
+                && "3794".equals(newUser.getInvitationCode())){
             userService.addNewUser(newUser);
             return "Player";
         } else if (userService.isUserNameAlreadyTaken(newUser.getUserName())){
